@@ -1,21 +1,19 @@
 <div class="container" (mousemove)="onMouseMove($event)">
 
   <!-- CARD FLOW -->
-  <div class="card" *ngIf="step !== 3 && step !== 4">
+  <div class="card" *ngIf="step === 1 || step === 2">
+
 
     <!-- STEP 1 -->
     <ng-container *ngIf="step === 1">
       <h1>💖 Will you be my Valentine? 💖</h1>
 
       <div class="buttons">
-        <button class="yes" (click)="goToConfirm()">Yes 💕</button>
+        <button class="yes" (click)="goToConfirm()">Yes </button>
 
-        <button
-          class="no"
-          [ngStyle]="noBtnStyle"
-          (mouseenter)="activateAndTeleportNo()"
+        <button class="no" [ngStyle]="noBtnStyle" (mouseenter)="activateAndTeleportNo()"
           (touchstart)="activateAndTeleportNo()">
-          No 💔
+          No
         </button>
       </div>
     </ng-container>
@@ -26,14 +24,11 @@
       <p>Because there is no going back…</p>
 
       <div class="buttons">
-        <button class="yes" (click)="finalYes()">Yes, I’m very sure! 💖</button>
+        <button class="yes" (click)="finalYes()">Yes, I’m very sure! </button>
 
-        <button
-          class="no"
-          [ngStyle]="confirmNoStyle"
-          (mouseenter)="activateAndTeleportConfirmNo()"
+        <button class="no" [ngStyle]="confirmNoStyle" (mouseenter)="activateAndTeleportConfirmNo()"
           (touchstart)="activateAndTeleportConfirmNo()">
-          No, let me think again 😏
+          No, let me think again
         </button>
       </div>
     </ng-container>
@@ -41,69 +36,219 @@
   </div>
 
   <!-- STEP 3 : GIF -->
-  <div
-    *ngIf="step === 3"
-    class="final-screen">
+  <div *ngIf="step === 3" class="final-screen">
 
     <img src="assets/giphy.gif" style="width:200px" />
-    <h2>itni khushi ?!!! itni khushi mujhe aaj tk nahi hui 💖</h2>
+    <h2>itni khushi ?!!! itni khushi mujhe aaj tk nahi hui </h2>
 
     <!-- FADE MESSAGE -->
     <div class="fade-message" *ngIf="showNextPrompt">
-      <p>but tell me one thing 🥺</p>
-      <button class="yes" (click)="goToSlider()">kya 😏</button>
+      <p>but tell me one thing </p>
+      <button class="yes" (click)="goToSlider()">kya </button>
     </div>
   </div>
 
   <!-- STEP 4 : LOVE METER -->
   <!-- STEP 4 : LOVE METER -->
-<div *ngIf="step === 4" class="slider-screen">
+  <div *ngIf="step === 4" class="slider-screen">
 
-  <h1>How much do you love me? 💖</h1>
+    <h1>How much do you love me? 💖</h1>
 
-  <input
-    type="range"
-    min="0"
-    max="6"
-    step="1"
-    [(ngModel)]="loveValue"
-    (change)="checkLove()"
-    [class.shake]="shake"
-    class="love-slider"
-  />
+    <input type="range" min="0" max="6" step="1" [(ngModel)]="loveValue" (change)="checkLove()" [class.shake]="shake"
+      class="love-slider" />
 
-  <!-- LABELS -->
-  <div class="slider-labels">
-    <div
-      class="label"
-      *ngFor="let label of loveLabels; let i = index"
-      [class.active]="i === loveValue">
-      {{ label }}
+    <!-- LABELS -->
+    <div class="slider-labels">
+      <div class="label" *ngFor="let label of loveLabels; let i = index" [class.active]="i === loveValue">
+        {{ label }}
+      </div>
     </div>
+
+    <!-- POPUP -->
+    <div class="popup" *ngIf="popupMessage">
+      {{ popupMessage }}
+    </div>
+
+    <!-- FINAL LOVE GIF -->
+    <div *ngIf="showFinalGif" class="final-love">
+      <img src="assets/i-got-a-little-emotional-lala-ri.gif" alt="love gif" />
+    </div>
+
+    <!-- CHUP BUTTON -->
+    <button *ngIf="showChupButton" class="yes" style="margin-top: 20px" (click)="endLoveMeter()">
+      chup 🤫, itna bhi khush mt ho!
+    </button>
+
+
   </div>
 
-  <!-- POPUP -->
-  <div class="popup" *ngIf="popupMessage">
-    {{ popupMessage }}
-  </div>
 
-  <!-- FINAL LOVE GIF -->
-<div *ngIf="showFinalGif" class="final-love">
-  <img src="assets/i-got-a-little-emotional-lala-ri.gif" alt="love gif" />
-</div>
+  <div *ngIf="step === 5" class="happiness-screen">
 
-<!-- CHUP BUTTON -->
-<button
-  *ngIf="showChupButton"
-  class="yes"
-  style="margin-top: 20px"
-  (click)="endLoveMeter()">
-  chup 🤫, itna bhi khush mt ho!
-</button>
+    <h1 class="question">How happy do you make me? ❤️</h1>
+  
+    <div class="options-wrapper">
+  
+      <div 
+        class="option-card"
+        [class.selected]="selectedOption === 0"
+        (click)="selectOption(0)">
+        <img src="assets/howmuchhappydoyoumakeme1.webp" />
+        <div class="label">
+          <span class="checkbox"></span>
+          this happy !
+        </div>
+      </div>
+  
+      <div 
+        class="option-card"
+        [class.selected]="selectedOption === 1"
+        (click)="selectOption(1)">
+        <img src="assets/howmuchhappydoyoumakeme2.webp" />
+        <div class="label">
+          <span class="checkbox"></span>
+          this happy !
+        </div>
+      </div>
+  
+      <div 
+        class="option-card"
+        [class.selected]="selectedOption === 2"
+        (click)="selectOption(2)">
+        <img src="assets/howmuchhappydoyoumakeme6.webp" />
+        <div class="label">
+          <span class="checkbox"></span>
+          this happy !
+        </div>
+      </div>
+  
+    </div>
+  
+    <button 
+      class="submit-btn"
+      [disabled]="selectedOption === null"
+      (click)="submitHappiness()">
+      Submit 💌
+    </button>
+  
+    <div class="message" *ngIf="happinessMessage">
+      {{ happinessMessage }}
+    </div>
+  
+    <div *ngIf="unlockHappiness" class="video-wrapper">
+      <video
+        src="assets/makemedance.mp4"
+        autoplay
+        muted
+        loop
+        playsinline>
+      </video>
 
+      <button
+      *ngIf="showNextStepBtn"
+      class="next-step-btn"
+      (click)="goToStep6()">
+      Okay one last thing plz 🥺
+    </button>
+    </div>
 
-</div>
 
   
+  </div>
+  
+
+  <div  *ngIf="step === 6" class="step6-container" #container>
+
+    <h1 class="title">
+      Kiss me to fill my heart with love 😘
+    </h1>
+  
+    <div class="content">
+  
+      <!-- Left Image -->
+      <img src="assets/sendkisses.jfif" class="side-img left-img" #leftImg />
+  
+      <!-- Heart Section -->
+      <div class="heart-section">
+  
+        <div class="heart-wrapper">
+  
+          <svg viewBox="0 0 200 180" class="heart-svg">
+  
+            <!-- Heart Shape -->
+            <path
+              d="M100 170
+                 L20 90
+                 A40 40 0 0 1 100 50
+                 A40 40 0 0 1 180 90
+                 Z"
+              class="heart-outline"
+            />
+  
+            <!-- Clip path -->
+            <clipPath id="heartClip">
+              <path
+                d="M100 170
+                   L20 90
+                   A40 40 0 0 1 100 50
+                   A40 40 0 0 1 180 90
+                   Z"
+              />
+            </clipPath>
+  
+            <!-- Fill -->
+            <rect
+              x="0"
+              y="180"
+              width="200"
+              height="180"
+              [attr.y]="180 - fillLevel"
+              class="heart-fill"
+              clip-path="url(#heartClip)"
+            />
+  
+          </svg>
+  
+        </div>
+  
+        <button class="kiss-btn" (click)="sendKiss()">
+          Kiss Me 😘
+        </button>
+  
+      </div>
+  
+      <!-- Right Image -->
+      <img src="assets/sendkisses2.jpeg" class="side-img right-img" #rightImg />
+  
+    </div>
+  
+    <!-- Flying Kiss -->
+    <div
+      class="flying-kiss"
+      *ngIf="showKiss"
+      [ngStyle]="{
+        left: kissX + 'px',
+        top: kissY + 'px'
+      }"
+    >
+      😘
+    </div>
+
+    <div *ngIf="showFinalCard" class="final-card">
+      <p>You just made my day 😘</p>
+      <h1>💖 Very Happy Valentine’s Day My Love 💖</h1>
+      <p>I love you so much😘</p>
+    </div>
+    
+  
+  </div>
+  
+  
+  
+
+
+
+
+
 
 </div>
